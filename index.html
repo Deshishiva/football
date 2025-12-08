@@ -40,29 +40,29 @@
 
     <h1>Goal Shock Trading Engine</h1>
     <p>
-        Submission for Omniverse Fund – AI/ML / Quant Intern assessment.  
-        This page gives a quick overview of the project and links to the code.
+        Submission for <strong>Omniverse Fund – AI/ML / Quant Intern Assessment</strong>.  
+        This page provides a clear overview of the project and links to the source code.
     </p>
 
     <div class="box">
         <h2>1. Project Summary</h2>
         <p>
-            This engine listens to real-time football match events and reacts when an 
+            This engine listens to simulated real-time football goal events and reacts when an 
             <strong>underdog team scores a goal</strong>.  
-            It attempts to exploit short-term price lag on prediction markets by placing 
-            fast buy orders before the market adjusts.
+            The strategy attempts to capture short-lived price mispricing in prediction markets
+            such as Kalshi and Polymarket by placing fast trades before markets adjust.
         </p>
     </div>
 
     <div class="box">
         <h2>2. What the System Does</h2>
         <ul>
-            <li>Receives goal updates (mock feed for testing)</li>
-            <li>Normalizes incoming events</li>
-            <li>Maps events to synthetic markets</li>
+            <li>Receives goal updates (mock live feed)</li>
+            <li>Normalizes every event into a clean format</li>
+            <li>Maps events to a synthetic in-play market</li>
             <li>Simulates market prices</li>
-            <li>Trader decides "BUY" when underdog scores</li>
-            <li>Logs all decisions</li>
+            <li>Decision engine evaluates whether to BUY</li>
+            <li>Logs all orders and decisions</li>
         </ul>
     </div>
 
@@ -70,33 +70,37 @@
         <h2>3. Source Code</h2>
         <p>
             Full project repository:  
-            <strong><a href="#" target="_blank">[Add your GitHub link here]</a></strong>
+            <strong>
+                <a href="https://github.com/Deshishiva/football-" target="_blank">
+                    https://github.com/Deshishiva/football-
+                </a>
+            </strong>
         </p>
     </div>
 
     <div class="box">
         <h2>4. How to Run Locally</h2>
         <pre>
-git clone &lt;your repo&gt;
-cd project-folder
+git clone https://github.com/Deshishiva/football-
+cd football-
 
-# install dependencies
+# install dependency
 pip install websocket-client
 
 # run engine
 python main.py
         </pre>
-        <p>This runs the mock feed and prints trading activity in the terminal.</p>
+        <p>This starts the mock event feed and displays all trades in the terminal.</p>
     </div>
 
     <div class="box">
         <h2>5. Workflow (Short Explanation)</h2>
         <ul>
-            <li><strong>MockFeed</strong> → generates random match events</li>
-            <li><strong>Normalizer</strong> → cleans event structure</li>
-            <li><strong>Matcher</strong> → maps event to a market</li>
-            <li><strong>PriceFeed</strong> → simulates market price</li>
-            <li><strong>Trader</strong> → decides BUY or NO TRADE</li>
+            <li><strong>MockFeed</strong> → Generates random match events</li>
+            <li><strong>Normalizer</strong> → Cleans event structure</li>
+            <li><strong>Matcher</strong> → Maps match to market ID</li>
+            <li><strong>PriceFeed</strong> → Produces temporary market prices</li>
+            <li><strong>Trader</strong> → Decides BUY / NO TRADE</li>
         </ul>
     </div>
 
@@ -112,24 +116,23 @@ Order executed | size=20 | price=0.33
     <div class="box">
         <h2>7. Submission Email Template</h2>
         <pre>
-Subject: Omniverse — Engine Submission — [Your Name]
+Subject: Omniverse — Engine Submission — Shiva kumar Deshi
 
 Hi Daniel / Omniverse team,
 
 My project submission is here:
-[Insert your project link]
+https://github.com/Deshishiva/football-
 
 Summary:
 - Engine Name: Goal Shock Engine
-- Markets: Live football trading
+- Markets: Live football trading (Kalshi-style simulation)
 - Run with: python main.py
 
 Thanks,
-[Your Name]
-[Your Email]
+Shiva kumar Deshi
+dshivakumar2031@gmail.com
         </pre>
     </div>
 
 </body>
 </html>
-
