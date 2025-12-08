@@ -1,5 +1,5 @@
-WEBSOCKET_URL = ""   # add real feed URL later
-TICKER_API = ""      # add ticker API
+WEBSOCKET_URL = ""   
+TICKER_API = ""     
 TICKER_API_KEY = ""
 
 KALSHI_ENABLED = False
