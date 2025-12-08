@@ -1,4 +1,4 @@
-# market_ticker.py
+
 import random
 import config
 import requests
