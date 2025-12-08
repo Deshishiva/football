@@ -1,35 +1,37 @@
 from utils import get_logger
+import market_ticker
+import kalshi_client
 import config
 
 logger = get_logger("Trader")
 
 class Trader:
-    def __init__(self, price_feed, matcher):
-        self.price_feed = price_feed
-        self.matcher = matcher
+    def __init__(self):
+        self.kalshi = kalshi_client.KalshiClient()
 
-    def process_goal(self, event):
-        print("EVENT RECEIVED:", event)  # debug
-
+    def handle_event(self, event):
+        minute = event["minute"]
         match_id = event["match_id"]
-        home = event["home"]
-        away = event["away"]
-        team = event["team"]
 
-        market = self.matcher.get_market(match_id)
+        if minute < config.MIN_GOAL_MINUTE:
+            return {"action": "no_trade", "reason": "too_early"}
 
-        if not market:
-            self.matcher.register_match(match_id, home, away)
-            market = self.matcher.get_market(match_id)
+        prob = market_ticker.get_market_probability(match_id)
 
-        base_prob = self.matcher.get_team_prob(team)
-        price = self.price_feed.get_price(market)
+        if prob >= config.PROBABILITY_THRESHOLD:
+            return {"action": "no_trade", "reason": "high_prob"}
 
-        if base_prob < config.UNDERDOG_THRESHOLD and price < config.UNDERDOG_THRESHOLD:
-            logger.info(f"Underdog scored -> BUY | Team={team} | base_prob={base_prob} | price={price}")
-            self.execute_order(market, price)
-        else:
-            logger.info(f"No trade | Team={team} | base_prob={base_prob} | price={price}")
+        market_id = market_ticker.market_id_from_match(match_id)
 
-    def execute_order(self, market_id, price):
-        logger.info(f"Order executed | market={market_id} | size={config.TRADE_SIZE} | price={price}")
+        order = self.kalshi.place_order(
+            market_id=market_id,
+            size=config.TRADE_SIZE,
+            price=prob
+        )
+
+        return {
+            "action": "buy",
+            "market": market_id,
+            "price": prob,
+            "order": order
+        }

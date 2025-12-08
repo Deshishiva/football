@@ -1,24 +1,20 @@
-from mock_feed import MockGoalFeed
+from live_feed import LiveFeed
 from trader import Trader
-from matcher import MatchRegistry
-from price_feed import PriceFeed
 from utils import get_logger
+import time
 
 logger = get_logger("Main")
 
+trader = Trader()
 
-def handle(event):
-    trader.process_goal(event)
-
-
-def main():
-    feed = MockGoalFeed()
-    feed.start(handle)
-
+def handle(evt):
+    logger.info(f"EVENT: {evt}")
+    result = trader.handle_event(evt)
+    logger.info(f"RESULT: {result}")
 
 if __name__ == "__main__":
-    price_feed = PriceFeed()
-    matcher = MatchRegistry()
-    trader = Trader(price_feed, matcher)
+    feed = LiveFeed(handler=handle)
+    feed.start()
 
-    main()
+    while True:
+        time.sleep(1)
